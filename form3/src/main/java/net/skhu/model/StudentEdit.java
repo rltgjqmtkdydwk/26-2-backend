@@ -12,7 +12,8 @@ import lombok.Data;
 public class StudentEdit {
     int id;
 
-    @NotEmpty @NotBlank
+    @NotEmpty(message="학번을 입력하세요")
+    @NotBlank
     @Size(min=8, max=12)
     String studentNo;
 
@@ -20,10 +21,10 @@ public class StudentEdit {
     @Size(min=2, max=20)
     String name;
 
-    @Min(1)
+    @Min(value=1, message="학과를 선택하세요")
     int departmentId;
 
-    @NotEmpty @NotBlank
+    @NotEmpty
     @Pattern(regexp="남자|여자")
     String gender;
 
