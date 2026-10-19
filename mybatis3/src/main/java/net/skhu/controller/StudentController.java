@@ -34,10 +34,17 @@ public class StudentController {
     }
 
     @GetMapping("edit")
-    public String edit(Model model) {
-        StudentEdit student = new StudentEdit();
-        student.setName("홍길동");
-        model.addAttribute("studentEdit", student);
+    public String edit(Model model, @RequestParam("id") int id) {
+        Student student = studentMapper.findById(id);
+        StudentEdit studentEdit = new StudentEdit();
+        studentEdit.setId(student.getId());
+        studentEdit.setStudentNo(student.getStudentNo());
+        studentEdit.setDepartmentId(student.getDepartmentId());
+        studentEdit.setName(student.getName());
+        studentEdit.setPhone(student.getPhone());
+        studentEdit.setEmail(student.getEmail());
+        studentEdit.setSex(student.getSex());
+        model.addAttribute("studentEdit", studentEdit);
         return "student/edit";
     }
 
@@ -58,6 +65,4 @@ public class StudentController {
         }
     }
 }
-
-
 

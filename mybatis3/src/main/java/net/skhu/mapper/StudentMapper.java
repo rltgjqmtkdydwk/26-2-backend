@@ -15,4 +15,7 @@ public interface StudentMapper {
         FROM student s JOIN department d ON s.departmentId = d.id
         WHERE s.name LIKE #{name} """)
     List<Student> findByName(String name);
+
+    @Select("SELECT * FROM student WHERE id=#{id}")
+    Student findById(int id);
 }
