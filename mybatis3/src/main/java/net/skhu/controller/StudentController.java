@@ -2,6 +2,7 @@ package net.skhu.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import net.skhu.model.StudentEdit;
 public class StudentController {
 
     @Autowired StudentMapper studentMapper;
+    ModelMapper modelMapper = new ModelMapper();
 
     @GetMapping("list")
     public String list(Model model,
@@ -34,16 +36,9 @@ public class StudentController {
     }
 
     @GetMapping("edit")
-    public String edit(Model model, @RequestParam("id") int id) {
+    public String edit(Model model, @RequestParam(value="id", defaultValue="1") int id) {
         Student student = studentMapper.findById(id);
-        StudentEdit studentEdit = new StudentEdit();
-        studentEdit.setId(student.getId());
-        studentEdit.setStudentNo(student.getStudentNo());
-        studentEdit.setDepartmentId(student.getDepartmentId());
-        studentEdit.setName(student.getName());
-        studentEdit.setPhone(student.getPhone());
-        studentEdit.setEmail(student.getEmail());
-        studentEdit.setSex(student.getSex());
+        StudentEdit studentEdit = modelMapper.map(student, StudentEdit.class);
         model.addAttribute("studentEdit", studentEdit);
         return "student/edit";
     }
@@ -65,4 +60,6 @@ public class StudentController {
         }
     }
 }
+
+
 
