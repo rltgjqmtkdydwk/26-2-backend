@@ -10,8 +10,9 @@
 </head>
 <body>
 <div class="container">
- <form method="post" th:object="${studentEdit}" class="shadow">
-    <h1>학생 수정</h1>
+ <form method="post" th:object="${studentEdit}" class="shadow"> 
+    <h1 th:if="${studentEdit.id > 0}">학생 수정</h1>
+    <h1 th:if="${studentEdit.id == 0}">학생 등록</h1>
     <div class="row">
       <label>학번:</label>
       <input type="text" th:field="*{studentNo}" />
@@ -29,7 +30,6 @@
         <option value="1">소프트웨어공학과</option>
         <option value="2">컴퓨터공학과</option>
         <option value="3">정보통신공학과</option>
-        <option value="4">글로컬IT공학과</option>
       </select>
       <div class="error" th:errors="*{departmentId}"></div>
     </div>

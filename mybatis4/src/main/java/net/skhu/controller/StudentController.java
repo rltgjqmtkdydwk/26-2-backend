@@ -59,4 +59,30 @@ public class StudentController {
             return "student/edit";
         }
     }
+    @GetMapping("create")
+    public String create(Model model) {
+        StudentEdit studentEdit = new StudentEdit();
+        model.addAttribute("studentEdit", studentEdit);
+        return "student/edit";
+    }
+
+
+    @PostMapping("create")
+    public String create(Model model, @Valid StudentEdit studentEdit, BindingResult bindingResult) {
+        try {
+            log.debug(studentEdit.toString());
+            if (bindingResult.hasErrors()) {
+				throw new Exception("저장할 수 없습니다");
+			}
+
+
+            Student student = modelMapper.map(studentEdit, Student.class);
+            studentMapper.insert(student);
+            return "redirect:list";
+        }
+        catch (Exception ex) {
+            bindingResult.reject("", null, ex.getMessage());
+            return "student/edit";
+        }
+    }
 }
