@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import net.skhu.dto.Student;
+import net.skhu.mapper.DepartmentMapper;
 import net.skhu.mapper.StudentMapper;
 import net.skhu.model.StudentEdit;
 
@@ -24,6 +25,7 @@ import net.skhu.model.StudentEdit;
 public class StudentController {
 
     @Autowired StudentMapper studentMapper;
+    @Autowired DepartmentMapper departmentMapper;
     ModelMapper modelMapper = new ModelMapper();
 
     @GetMapping("list")
@@ -40,6 +42,7 @@ public class StudentController {
         Student student = studentMapper.findById(id);
         StudentEdit studentEdit = modelMapper.map(student, StudentEdit.class);
         model.addAttribute("studentEdit", studentEdit);
+        model.addAttribute("departments", departmentMapper.findAll());
         return "student/edit";
     }
 
@@ -57,6 +60,7 @@ public class StudentController {
         }
         catch (Exception ex) {
             bindingResult.reject("", null, ex.getMessage());
+            model.addAttribute("departments", departmentMapper.findAll());
             return "student/edit";
         }
     }
@@ -69,6 +73,7 @@ public class StudentController {
         }
         catch (Exception ex) {
             bindingResult.reject("", null, ex.getMessage());
+            model.addAttribute("departments", departmentMapper.findAll());
             return "student/edit";
         }
     }
@@ -77,6 +82,7 @@ public class StudentController {
     public String create(Model model) {
         StudentEdit studentEdit = new StudentEdit();
         model.addAttribute("studentEdit", studentEdit);
+        model.addAttribute("departments", departmentMapper.findAll());
         return "student/edit";
     }
 
@@ -94,6 +100,7 @@ public class StudentController {
         }
         catch (Exception ex) {
             bindingResult.reject("", null, ex.getMessage());
+            model.addAttribute("departments", departmentMapper.findAll());
             return "student/edit";
         }
     }

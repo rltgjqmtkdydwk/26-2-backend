@@ -27,10 +27,9 @@
       <label>학과:</label>
       <select th:field="*{departmentId}">
         <option value="0">학과를 선택하세요</option>
-        <option value="1">소프트웨어공학과</option>
-        <option value="2">컴퓨터공학과</option>
-        <option value="3">정보통신공학과</option>
-        <option value="4">글로컬IT공학과</option>
+        <option th:each="d : ${departments}"
+                th:value="${d.id}"
+                th:text="${d.name}"></option>
       </select>
       <div class="error" th:errors="*{departmentId}"></div>
     </div>
